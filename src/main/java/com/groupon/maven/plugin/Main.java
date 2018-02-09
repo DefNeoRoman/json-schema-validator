@@ -1,16 +1,12 @@
 package com.groupon.maven.plugin;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
-import com.groupon.maven.plugin.tree.JsonNode;
 
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.LinkedList;
 import java.util.stream.Stream;
 
 
@@ -23,24 +19,17 @@ public class Main {
        stringStream.forEach(sb::append);
        String json = sb.toString();
             JsonReader reader = new JsonReader(new StringReader(json));
+            reader = recurseParsing(reader);
 
-            reader.beginObject();
-            while(reader.hasNext()){
-                JsonToken token = reader.peek();
-                System.out.println(token.toString());
-                if (token.equals(JsonToken.END_OBJECT)) System.out.println("endOfObject");
-                if (token.equals(JsonToken.BEGIN_ARRAY)) System.out.println("beginArray");
-                if(token.equals(JsonToken.BEGIN_OBJECT)) reader.beginObject();
-                if(token.equals(JsonToken.STRING)) reader.nextString();
-                if(token.equals(JsonToken.NAME)) System.out.println(reader.nextName());
+            JsonToken peek = reader.peek();
+            if (peek.equals(JsonToken.BEGIN_OBJECT)){
 
+                reader = recurseParsing(reader);
             }
-            reader.endObject();
-            reader.endObject();
-            System.out.println(reader.nextName());
-            reader.beginObject();
-            JsonToken token = reader.peek();
-
+            if(peek.equals(JsonToken.NAME)){
+                
+                reader = recurseParsing(reader);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -48,6 +37,25 @@ public class Main {
 
 
 
+    }
+    public static JsonReader recurseParsing(JsonReader reader) throws IOException {
+        int count = 0;
+        reader.beginObject();
+        while(reader.hasNext()){
+            JsonToken token = reader.peek();
+            if(token.equals(JsonToken.BEGIN_OBJECT)) {
+                reader.beginObject();
+                count++;
+            }
+            if(token.equals(JsonToken.NAME)) System.out.println(reader.nextName());
+            if(token.equals(JsonToken.STRING)) reader.nextString();
+        }
+        for (int i=1; i<count;i++){
+            reader.endObject();
+        }
+        System.out.println(reader.peek().toString());
+
+        return reader;
     }
     /**
      * Handle an Object. Consume the first token which is BEGIN_OBJECT. Within
