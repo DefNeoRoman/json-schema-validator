@@ -120,7 +120,9 @@ public class DefaultValidatorExecutor implements ValidatorExecutor {
 
     private JsonNode loadJson(final String file) throws MojoExecutionException {
         try {
+
             final JsonNode node = JsonLoader.fromPath(file);
+            // Input
             request.getLog().info("File: " + file + " - parsing Json - Success");
             return node;
         } catch (final IOException io) {

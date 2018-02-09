@@ -48,6 +48,14 @@ public class Validation extends FileSet {
     private String jsonSchema;
     private String jsonFile;
 
+    public Validation() {
+    }
+
+    public Validation(String jsonSchema, String jsonFile) {
+        this.jsonSchema = jsonSchema;
+        this.jsonFile = jsonFile;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public String getJsonSchema() {

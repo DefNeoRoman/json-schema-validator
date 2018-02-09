@@ -1,54 +1,45 @@
-package com.groupon.maven.plugin;
+package com.groupon.maven.plugin.json;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
+
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
-import com.groupon.maven.plugin.tree.JsonNode;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.LinkedList;
-import java.util.stream.Stream;
 
+public class Testing {
+    public static void main(String[] args) throws  IOException
+    {
 
-public class Main {
-    public static void main(String[] args) {
+        String json = "{\n" +
+                "    \"supportForm\": {\n" +
+                "\n" +
+                "        \"title\":4,\n" +
+                "        \"question\": \"Ваш вопрос:\",\n" +
+                "        \"email\": \"Ответ придёт на ваш E-mail:\",\n" +
+                "        \"service\": \"Вас обслуживает:\",\n" +
+                "        \"attrTitle\": \"Отправить сообщение в техническую поддержку\",\n" +
+                "        \"undefined\": \"Информация недоступна\",\n" +
+                "        \"tel\": \"тел.\",\n" +
+                "        \"subject\": \"Тема:\",\n" +
+                "        \"success\": \"Ваш вопрос успешно отправлен в техническую поддержку\",\n" +
+                "        \"fail\": \"При попытке отправить запрос произошла ошибка. Пожалуйста, попробуйте позже.\",\n" +
+                "        \"errors\": {\n" +
+                "            \"email\": \"Введён некорректный E-mail\",\n" +
+                "            \"subject\": \"Тема обращения не должна быть пустой\",\n" +
+                "            \"question\": \"Ваш вопрос не должен быть пустым\"\n" +
+                "        }\n" +
+                "    }\n" +
+                "}";
+        // use the reader to read the json to a stream of tokens
+        JsonReader reader = new JsonReader(new StringReader(json));
+        // we call the handle object method to handle the full json object. This
+        // implies that the first token in JsonToken.BEGIN_OBJECT, which is
+        // always true.
 
-        try {
-            StringBuilder sb = new StringBuilder();
-       Stream<String> stringStream = Files.lines(Paths.get("D:\\mySandbox2\\validator\\json-schema-validator\\src\\test\\resources\\input-json-files\\localization-ru.json"));
-       stringStream.forEach(sb::append);
-       String json = sb.toString();
-            JsonReader reader = new JsonReader(new StringReader(json));
-
-            reader.beginObject();
-            while(reader.hasNext()){
-                JsonToken token = reader.peek();
-                System.out.println(token.toString());
-                if (token.equals(JsonToken.END_OBJECT)) System.out.println("endOfObject");
-                if (token.equals(JsonToken.BEGIN_ARRAY)) System.out.println("beginArray");
-                if(token.equals(JsonToken.BEGIN_OBJECT)) reader.beginObject();
-                if(token.equals(JsonToken.STRING)) reader.nextString();
-                if(token.equals(JsonToken.NAME)) System.out.println(reader.nextName());
-
-            }
-            reader.endObject();
-            reader.endObject();
-            System.out.println(reader.nextName());
-            reader.beginObject();
-            JsonToken token = reader.peek();
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-
+        handleObject(reader);
     }
+
     /**
      * Handle an Object. Consume the first token which is BEGIN_OBJECT. Within
      * the Object there could be array or non array tokens. We write handler
@@ -62,19 +53,14 @@ public class Main {
     {
         reader.beginObject();
         while (reader.hasNext()) {
-            JsonToken token = reader.peek();
-            System.out.println(token.toString());
+           JsonToken token = reader.peek();
             if (token.equals(JsonToken.BEGIN_ARRAY))
                 handleArray(reader);
             else if (token.equals(JsonToken.END_OBJECT)) {
-                System.out.println("in JsonToken.END_OBJECT");
                 reader.endObject();
                 return;
-            } else{
-
+            } else
                 handleNonArrayToken(reader, token);
-            }
-
         }
 
     }
@@ -91,7 +77,7 @@ public class Main {
         reader.beginArray();
         while (true) {
             JsonToken token = reader.peek();
-            System.out.println(token.toString());
+
             if (token.equals(JsonToken.END_ARRAY)) {
                 reader.endArray();
                 break;
@@ -99,12 +85,8 @@ public class Main {
                 handleObject(reader);
             } else if (token.equals(JsonToken.END_OBJECT)) {
                 reader.endObject();
-            } else{
-
+            } else
                 handleNonArrayToken(reader, token);
-            }
-
-
         }
     }
 
@@ -117,10 +99,8 @@ public class Main {
      */
     public static void handleNonArrayToken(JsonReader reader, JsonToken token) throws IOException
     {
-        if (token.equals(JsonToken.NAME)){
-
+        if (token.equals(JsonToken.NAME))
             System.out.println(reader.nextName());
-        }
         else if (token.equals(JsonToken.STRING))
             System.out.println(reader.nextString());
         else if (token.equals(JsonToken.NUMBER))
@@ -128,5 +108,6 @@ public class Main {
         else
             reader.skipValue();
     }
-
 }
+
+
