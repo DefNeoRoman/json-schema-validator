@@ -2,7 +2,7 @@
     "/": {
         "device": "/dev/sda1",
         "fstype": "btrfs",
-        "options": [ "ssd" ]
+        "options": ["ssd"]
     },
     "swap": {
         "device": "/dev/sda2",
