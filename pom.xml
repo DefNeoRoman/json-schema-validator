@@ -58,6 +58,15 @@
       </roles>
     </developer>
     <developer>
+      <id>rgaponov</id>
+      <email>romangaponov25@gmail.com</email>
+      <organization>Omnicomm</organization>
+      <organizationUrl>http://www.omnicomm.ru</organizationUrl>
+      <roles>
+        <role>developer</role>
+      </roles>
+    </developer>
+    <developer>
       <id>villekoskela</id>
       <email>vkoskela@groupon.com</email>
       <organization>Groupon</organization>
@@ -198,12 +207,7 @@
         <version>2.4</version>
       </plugin>
     </plugins>
-
-
-
-
   </build>
-
   <dependencies>
    <dependency>
       <groupId>com.github.fge</groupId>
