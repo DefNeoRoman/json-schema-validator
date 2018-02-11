@@ -27,6 +27,7 @@ import com.github.fge.jsonschema.core.report.ProcessingReport;
 import com.github.fge.jsonschema.main.JsonSchema;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
 
+import com.groupon.maven.plugin.library.JSONObject;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
@@ -69,7 +70,7 @@ public class DefaultValidatorExecutor implements ValidatorExecutor {
         }
         if (!StringUtils.isEmpty(validation.getJsonFile())) {
             String jsonFile = validation.getJsonFile();
-            //Логика будет здесь
+            JSONObject jsonObject = new JSONObject(jsonFile);
             jsonFiles.add(validation.getJsonFile());
         }
         if (!StringUtils.isEmpty(validation.getJsonSchema())) {
