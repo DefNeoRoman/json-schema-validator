@@ -29,7 +29,7 @@
   <name>Json Schema Validator Maven Plugin</name>
   <description>Maven plugin to validate json files against a json schema</description>
   <url>https://github.com/groupon/json-schema-validator</url>
-  <version>1.2.1-SNAPSHOT</version>
+  <version>1.2.1-RELEASE</version>
 
   <licenses>
     <license>
@@ -60,8 +60,8 @@
     <developer>
       <id>rgaponov</id>
       <email>romangaponov25@gmail.com</email>
-      <organization>Omnicomm</organization>
-      <organizationUrl>http://www.omnicomm.ru</organizationUrl>
+      <organization>home</organization>
+      <organizationUrl>http://www.homr.ru</organizationUrl>
       <roles>
         <role>developer</role>
       </roles>
@@ -104,7 +104,7 @@
 
     <!--Plugin versions-->
     <maven-plugin-plugin.version>3.2</maven-plugin-plugin.version>
-    <plexus-component-metadata.version>1.5.5</plexus-component-metadata.version>
+    <plexus-component-metadata.version>1.7</plexus-component-metadata.version>
   </properties>
 
   <build>
@@ -159,18 +159,33 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
-        <version>${maven-plugin-plugin.version}</version>
+        <version>3.4</version>
         <configuration>
-          <goalPrefix>json</goalPrefix>
+          <goalPrefix>json-schema-validator</goalPrefix>
           <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
         </configuration>
         <executions>
+          <execution>
+            <id>default-descriptor</id>
+            <goals>
+              <goal>descriptor</goal>
+            </goals>
+            <phase>process-classes</phase>
+          </execution>
+          <execution>
+            <id>help-descriptor</id>
+            <goals>
+              <goal>helpmojo</goal>
+            </goals>
+            <phase>process-classes</phase>
+          </execution>
           <execution>
             <id>mojo-descriptor</id>
             <goals>
               <goal>descriptor</goal>
             </goals>
           </execution>
+
         </executions>
       </plugin>
       <plugin>

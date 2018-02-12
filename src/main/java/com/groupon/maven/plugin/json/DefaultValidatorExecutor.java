@@ -71,8 +71,10 @@ public class DefaultValidatorExecutor implements ValidatorExecutor {
         if (!StringUtils.isEmpty(validation.getJsonFile())) {
             String jsonFile = validation.getJsonFile();
             JSONObject jsonObject = new JSONObject(jsonFile);
+            String val = jsonObject.toString();
             jsonFiles.add(validation.getJsonFile());
         }
+
         if (!StringUtils.isEmpty(validation.getJsonSchema())) {
             schemaFile = FileUtils.locateInputFile(validation.getJsonSchema(), inputLocator);
         }
