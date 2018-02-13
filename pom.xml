@@ -29,7 +29,7 @@
   <name>Json Schema Validator Maven Plugin</name>
   <description>Maven plugin to validate json files against a json schema</description>
   <url>https://github.com/groupon/json-schema-validator</url>
-  <version>1.2.6-RELEASE</version>
+  <version>1.2.7-RELEASE</version>
 
   <licenses>
     <license>
@@ -109,6 +109,41 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.5.1</version>
+        <executions>
+          <execution>
+            <id>default-deploy</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>deploy</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <serverId>nexus</serverId>
+          <nexusUrl>http://nexus.omnicomm.ru:8081/nexus</nexusUrl>
+          <skipStaging>true</skipStaging>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.8.1</version>
+        <executions>
+          <execution>
+            <id>default-deploy</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>deploy</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
       <!-- Enable Inherited Plugins -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -185,7 +220,6 @@
               <goal>descriptor</goal>
             </goals>
           </execution>
-
         </executions>
       </plugin>
       <plugin>
@@ -216,13 +250,18 @@
           <archive>
             <addMavenDescriptor>false</addMavenDescriptor>
             <compress>true</compress>
-
           </archive>
         </configuration>
         <version>2.4</version>
       </plugin>
     </plugins>
   </build>
+  <distributionManagement>
+    <snapshotRepository>
+      <id>nexus-snapshots</id>
+      <url>http://nexus.omnicomm.ru:8081/nexus</url>
+    </snapshotRepository>
+  </distributionManagement>
   <dependencies>
    <dependency>
       <groupId>com.github.fge</groupId>

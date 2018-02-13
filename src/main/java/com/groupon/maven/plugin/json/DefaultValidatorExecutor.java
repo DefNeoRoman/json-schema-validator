@@ -132,7 +132,6 @@ public class DefaultValidatorExecutor implements ValidatorExecutor {
              String test = jsonObject.toString();
             final JsonNode node = JsonLoader.fromPath(file);
             // Input
-
             request.getLog().info("File: " + file + " - parsing Json - Success");
             return node;
         } catch (final IOException io) {
