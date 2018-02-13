@@ -1,7 +1,7 @@
 <settings>
   <server>
     <id>nexus-snapshots</id>
-    <username>deployment</username>
+    <username>deployment_user</username>
     <password>the_pass_for_the_deployment_user</password>
   </server>
 </settings>
