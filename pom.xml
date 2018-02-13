@@ -29,7 +29,7 @@
   <name>Json Schema Validator Maven Plugin</name>
   <description>Maven plugin to validate json files against a json schema</description>
   <url>https://github.com/groupon/json-schema-validator</url>
-  <version>1.2.1-RELEASE</version>
+  <version>1.2.6-RELEASE</version>
 
   <licenses>
     <license>
@@ -95,8 +95,8 @@
     <maven-plugin-tools-annotations.version>3.2</maven-plugin-tools-annotations.version>
     <maven-plugin-tools-api.version>3.2</maven-plugin-tools-api.version>
     <mockito.version>1.10.19</mockito.version>
-    <plexus-component-annotations.version>1.5.5</plexus-component-annotations.version>
-    <plexus-resources.version>1.0-alpha-7</plexus-resources.version>
+    <plexus-component-annotations.version>1.7.1</plexus-component-annotations.version>
+    <plexus-resources.version>1.1.0</plexus-resources.version>
 
     <!--Coverage Settings-->
     <jacoco.check.line.coverage>1.0</jacoco.check.line.coverage>

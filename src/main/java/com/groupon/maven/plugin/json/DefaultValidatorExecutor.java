@@ -17,8 +17,11 @@ package com.groupon.maven.plugin.json;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.fge.jackson.JsonLoader;
@@ -69,9 +72,7 @@ public class DefaultValidatorExecutor implements ValidatorExecutor {
             jsonFiles.addAll(FileUtils.getListOfFiles(validation));
         }
         if (!StringUtils.isEmpty(validation.getJsonFile())) {
-            String jsonFile = validation.getJsonFile();
-            JSONObject jsonObject = new JSONObject(jsonFile);
-            String val = jsonObject.toString();
+
             jsonFiles.add(validation.getJsonFile());
         }
 
@@ -104,7 +105,7 @@ public class DefaultValidatorExecutor implements ValidatorExecutor {
 
     private void validateAgainstSchema(final String jsonDataFile, final String schemaFile) throws MojoExecutionException, MojoFailureException {
         final JsonNode schemaResource = loadJson(schemaFile);
-        final JsonNode fileResouce = loadJson(jsonDataFile);
+        final JsonNode fileResouce    = loadJson(jsonDataFile);
         final JsonSchemaFactory factory = JsonSchemaFactory.byDefault();
         try {
             final JsonSchema schema = factory.getJsonSchema(schemaResource);
@@ -123,9 +124,15 @@ public class DefaultValidatorExecutor implements ValidatorExecutor {
 
     private JsonNode loadJson(final String file) throws MojoExecutionException {
         try {
-
+            StringBuilder sb = new StringBuilder();
+            Stream<String> stringStream = Files.lines(Paths.get(file));
+            stringStream.forEach(sb::append);
+            String json = sb.toString();
+            JSONObject jsonObject = new JSONObject(json);
+             String test = jsonObject.toString();
             final JsonNode node = JsonLoader.fromPath(file);
             // Input
+
             request.getLog().info("File: " + file + " - parsing Json - Success");
             return node;
         } catch (final IOException io) {
