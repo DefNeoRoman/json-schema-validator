@@ -23,7 +23,7 @@
   <name>Json Schema Validator Maven Plugin</name>
   <description>Maven plugin to validate json files against a json schema</description>
   <url>https://github.com/groupon/json-schema-validator</url>
-  <version>1.2.7-RELEASE</version>
+  <version>1.2.8-RELEASE</version>
 
   <licenses>
     <license>
@@ -236,7 +236,7 @@
       </plugin>
     </plugins>
   </build>
-  
+
   <dependencies>
    <dependency>
       <groupId>com.github.fge</groupId>

@@ -30,6 +30,7 @@ import com.github.fge.jsonschema.core.report.ProcessingReport;
 import com.github.fge.jsonschema.main.JsonSchema;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
 
+import com.groupon.maven.plugin.library.JSONException;
 import com.groupon.maven.plugin.library.JSONObject;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -129,19 +130,19 @@ public class DefaultValidatorExecutor implements ValidatorExecutor {
             stringStream.forEach(sb::append);
             String json = sb.toString();
             JSONObject jsonObject = new JSONObject(json);
-             String test = jsonObject.toString();
+            String test = jsonObject.toString();
             final JsonNode node = JsonLoader.fromPath(file);
-            // Input
             request.getLog().info("File: " + file + " - parsing Json - Success");
             return node;
         } catch (final IOException io) {
             request.getLog().error("File: " + file + " - parsing Json - Failure");
-            throw new MojoExecutionException("Failed to parse JSON from file '" + file + "' - " + io.getMessage(), io);
-        }
-    }
-
-    // NOTE: Package private for testing.
-    /* package private */ static void configureInputLocator(final MavenProject project, final ResourceManager inputLocator) {
+            throw new MojoExecutionException("Failed to parse JSON from file'" + file + "' - " + io.getMessage(), io);
+        }catch (final JSONException e) {
+            request.getLog().error("File: " + file + " - parsing Json - Failure");
+            throw new MojoExecutionException("JSONException: Failed to parse JSON from file'" + file + "' - " + e.getMessage(), e);
+    }}
+        // NOTE: Package private for testing.
+        /* package private */ static void configureInputLocator(final MavenProject project, final ResourceManager inputLocator) {
         inputLocator.setOutputDirectory(new File(project.getBuild().getDirectory()));
 
         MavenProject parent = project;
@@ -153,3 +154,4 @@ public class DefaultValidatorExecutor implements ValidatorExecutor {
         inputLocator.addSearchPath("url", "");
     }
 }
+
